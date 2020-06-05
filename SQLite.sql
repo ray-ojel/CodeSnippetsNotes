@@ -42,8 +42,9 @@ Less Than <
 Less or equal to <=
 Greater than >
 Greater or equal to >=
-Equal to =
-Not equal to != or <>
+Equal to = or IS
+Not equal to != or <> or IS NOT
+Find in IN
 
 -- Used to filter data based on TWO criteria
 AND Clause
@@ -147,6 +148,11 @@ SELECT table.column,
        ELSE <value_3> -- Fallback value
        END AS <new_column_name> -- Indicates where Case ends
   FROM table;
+
+-- Find values in rows
+SELECT table.column
+  FROM table
+ WHERE condition IN table.column;
 ________________________________________________________________________________
 
 
@@ -203,9 +209,24 @@ ________________________________________________________________________________
 
 
 SUBQUERIES:
---
+-- General Format
 SELECT table.column
   FROM table
- WHERE some_condition ( )
+ WHERE some_condition > (subquery); -- Eq. to Nested Functions
+
+-- SELECT Subquery
+SELECT table.column
+  FROM table
+ WHERE some_condition > (SELECT AGGFUNC(table.column)
+                            FROM table
+                          );
+-- Returning Multiple Results in Subqueries
+SELECT table.column
+  FROM table
+ WHERE condition IN (SELECT table.column
+                      FROM table
+                    GROUP BY condition
+                  ORDER BY AGGFUNC(col)
+                );
 
 ________________________________________________________________________________
