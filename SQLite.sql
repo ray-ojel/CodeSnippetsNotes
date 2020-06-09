@@ -6,6 +6,11 @@ SQL (Structured Query Language):
 -- Read
 -- Update
 -- Delete
+
+-- Run SQL in Jupyter Notebook
+%%capture
+%load_ext sql
+%sql sqlite:///file.db
 ________________________________________________________________________________
 
 
