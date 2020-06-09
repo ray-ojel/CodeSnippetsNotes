@@ -15,6 +15,20 @@ utility parameter1 parameter2 ... parameterN # for N non-negative
 # Compare FILES line by line
 $ diff [option] ... FILES # Can take more than one option
 
+# Types of Commands
+# Files: Programs, Tools, Commands, etc. run files. .exe
+# Builtin: Commands that run in RAM for quick access
+# Alias: Diff name for command, to abbrev something
+# Function: Just like in python
+# Keyword: Unique words for commands
+
+# Order of running commands
+# 1. Aliases
+# 2. Special built-ins (a small list of built-ins that are considered special)
+# 3. Functions
+# 4. Regular built-ins
+# 5. And then it will look for files in a select list of directories called PATH
+
 # Utility:
 Also 'Command' or 'Program'
 First item in the instruction
@@ -64,6 +78,35 @@ ________________________________________________________________________________
 GENERAL COMMANDS:
 # Get command options
 $ command --help
+# OR
+$ help command
+
+# Run Python
+$ Python3 -c "code" # Python3 is a file type
+
+# Set Autocomplete ON
+$ compgen # Press TAB key to autocomplete
+
+# List all Keyword type commands
+$ comgen -k
+
+# Create an alias command
+$ alias a=alias
+
+# Remove an alias
+$ unalias a
+
+# Get command type
+$ type
+
+# Get command type readable
+$ type -t command # -t is not POSIX compliant and not portable
+
+# Get command PATH
+$ type -P command # Not portable
+
+# Find total functions available to use rn
+$ declare -F # Known as BASHISM i.e. only available for Bash, non-POSIX
 
 # Access command history
 # Use up and down arrow to write previous commands and rerun with ENTER
@@ -110,6 +153,50 @@ $ clear
 
 # Exit the terminal
 $ exit
+________________________________________________________________________________
+
+
+LESS: # A terminal pager, i.e used to view contents of a text file
+# Acess the command manual
+$ man command # Display in a program called LESS, on the man page
+
+# Structure:
+# NAME: The command's name and a brief description of what it does.
+# SYNOPSIS: The allowed syntax.
+# DESCRIPTION: A description of the command. It frequently includes information about its options.
+# OPTIONS: When not included in the section above, the options are documented in this section.
+
+# Simple manual
+$ whatis command
+
+# Immedaite manual help
+$ help command #OR
+$ command --help
+
+# Breakdown of MAN and HELP page
+# Bold Text: Type exactly as seen
+# Italic: replace with appr arg
+# []: Optional arg
+# arg|arg: Can't be used together
+# Arg... : Can Repeat args
+# [arg]... : Can repeat entire optional arg
+
+# LESS Features:
+# Input                             Action
+# Up/down arrows         Scroll up/down one line
+# Left/right arrows      Move page to the left/right
+# b                      Scroll up (or backwards) one page
+# Space                  Scroll down one page
+# g                      Move to the beginning of the file
+# G                      Move to the end of the file
+# /pattern               Search forward for the occurrence of the regex pattern
+# ?pattern               Search backwards for the occurrence of the regex pattern
+# n                      Find next occurrence of the previous search
+# N                      Find previous occurrence of the previous search
+# :p                     Move to previous file
+# :n                     Move to next file
+# h                      Display less's help screen (with less)
+# q                      Quit the active instance of less
 ________________________________________________________________________________
 
 
