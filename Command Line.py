@@ -66,12 +66,6 @@ EX: /home/mojel
 Any other path, relative to the cwd
 EX: home/mojel
 EX: mojel/
-
-# Current directory
-.
-
-# Parent directory
-..
 ________________________________________________________________________________
 
 
@@ -105,6 +99,11 @@ $ type -t command # -t is not POSIX compliant and not portable
 # Get command PATH
 $ type -P command # Not portable
 
+# Determine file kind
+$ file filename
+#OR
+$ file * # for all directory
+
 # Find total functions available to use rn
 $ declare -F # Known as BASHISM i.e. only available for Bash, non-POSIX
 
@@ -120,33 +119,6 @@ $ !-2 # Runs second-to-last command
 
 # Search for files
 $ find [location] -iname ['filename'] # use (/) for location of root, -iname ignoes cases
-
-# Print the current user
-$ whoami
-
-# Print the current user
-$ id -un
-
-# Print the current user info
-$ id
-
-# Understanding Output
->>> uid=1000(mojel) gid=1000(mojel) groups=1000(mojel),27(sudo)
-# UID: User ID, unique, and USERNAME
-# GID: Main Group ID, unique, and GROUPNAME
-# Groups: ALL GroupNames and IDs, i.e. mojel and sudo groups here
-
-# Print the current groups of a user
-$ groups
-
-# Display file status
-$ stat file
-
-# Run commands as other users
-$ sudo -u user <command> # sudo (substitute user do)
-
-# Run commands as root or superuser
-$ sudo <command> # is enough
 
 # Clear the terminal
 $ clear
@@ -172,6 +144,9 @@ $ whatis command
 # Immedaite manual help
 $ help command #OR
 $ command --help
+
+# Less command
+$ less file # to open the file in a less pager
 
 # Breakdown of MAN and HELP page
 # Bold Text: Type exactly as seen
@@ -235,7 +210,7 @@ $ ls -lh # Changes some values to easier to understand values, ex size in KB\
 ________________________________________________________________________________
 
 
-THE FILESYSTEM CHANGE DIRECTORY:
+THE FILESYSTEM:
 # Change directory
 $ cd [PATH] # in Ubuntu, use /mnt/c/ before any path
 
@@ -257,10 +232,7 @@ $ cd ~ # To change to just home directory
 
 # Change to last directory
 $ cd - # switch between current and last directory
-________________________________________________________________________________
 
-
-MODIFYING THE FILESYSTEM:
 # Create a directory
 $ mkdir [PATH] # Make directory
 
@@ -299,6 +271,12 @@ $ mv [SOURCE PATH] [DEST PATH] # Can move multiple files at once, original file 
 
 # Rename a filie
 $ mv [OLD NAME] [NEW NAME]
+
+# Current directory
+.
+
+# Parent directory
+..
 ________________________________________________________________________________
 
 
@@ -368,10 +346,48 @@ The [[:lower:]] Wildcard
 
 # Match any upper case letters
 The [[:upper:]] Wildcard
+
+# Global regular expression print
+$ grep -n 'pattern' file # -n prints line number for match
+
+# Grep select non-match
+$ grep -v 'pattern' file
+
+# Grep select but ignore case
+$ grep -i 'pattern' file
+
+# 
 ________________________________________________________________________________
 
 
 PERMISSIONS:
+# Print the current user
+$ whoami
+
+# Print the current user
+$ id -un
+
+# Print the current user info
+$ id
+
+# Understanding Output
+>>> uid=1000(mojel) gid=1000(mojel) groups=1000(mojel),27(sudo)
+# UID: User ID, unique, and USERNAME
+# GID: Main Group ID, unique, and GROUPNAME
+# Groups: ALL GroupNames and IDs, i.e. mojel and sudo groups here
+
+# Print the current groups of a user
+$ groups
+
+# Display file status
+$ stat file
+
+# Run commands as other users
+$ sudo -u user <command> # sudo (substitute user do)
+
+# Run commands as root or superuser
+$ sudo <command> # is enough
+
 # Everything is a file
 # Three scopes:
 # 1. There are permissions for the owner
@@ -449,5 +465,72 @@ $ sudo chown [new_owner][:new_group] files...
 
 # Change the group of the file
 $ chgrp
+________________________________________________________________________________
+
+TEXT PROCESSING: # Like data exploration and cleaning in python
+# Display the top of a file
+$ head file
+
+# Displa the bottom of a file
+$ tail file
+
+# Defaults to list 10 lines, to change
+$ head -n k file # k is the number of lines we want ex 5
+
+# Exclude some number of lines from the ends
+$ head -n -k file # -k means will print all lines except last k lines
+
+# Exclude for tail
+$ tail -n +k file # +k means will print all lines except first k lines
+
+# Count the number of lines, words and bits of a file
+$ wc file # In the order above
+
+# Print, view and count file columns
+$ column -s"," -t file # Use (-s',') to specify , delimit instead of space
+
+# Dispplay random set of lines
+$ shuf -n k file # k is number of lines, shuf == shuffle random lines
+
+# Concatenate files
+$ cat file1 file2 # Like df.concat, order specific
+
+# Concat all files in a directory
+$ cat *
+
+# Concat files but reverse the order of the lins
+$ tac file1 file2 # still order specific
+
+# View sorted file
+$ sort file # sorts lexicographically, pass -g to sort by nums
+
+# Sort by reverse/descending order
+$ sort -r file # WARNING: Favores smaller case over cap
+
+# Keep only unique values while sorting
+$ sort -u file # Gets rid of duplicates
+
+# Running two files in sort
+$ sort file1 file2 # will concat and sort both as one
+
+# Sort df by a column
+$ sort -t',' -k<start,stop>g file.csv
+# -t tells delimiter
+# -k (key)
+# col index, repeated (seen as a range)
+# -g sorts by numeric
+
+# Sort df by multiple columns, numerically, in reverse
+$ sort -t',' -k<col1,col1>gr -k<col2,col2>g file.csv
+
+# Display select columns
+$ cut -d',' -f<col1,col2> file.csv # -d delimiter, -f specific cols
+
+# Display range of columns
+$ cut -d',' -f<col1-col2> file.csv # Can also mix both ex: 2,3,7-9
+
+#
+
+
 
 #
