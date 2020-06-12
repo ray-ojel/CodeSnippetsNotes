@@ -12,23 +12,6 @@ EX: in /home/mojel, the (/) is the root directory, home is a subdirectory of the
 # Elementary commands
 utility parameter1 parameter2 ... parameterN # for N non-negative
 
-# Compare FILES line by line
-$ diff [option] ... FILES # Can take more than one option
-
-# Types of Commands
-# Files: Programs, Tools, Commands, etc. run files. .exe
-# Builtin: Commands that run in RAM for quick access
-# Alias: Diff name for command, to abbrev something
-# Function: Just like in python
-# Keyword: Unique words for commands
-
-# Order of running commands
-# 1. Aliases
-# 2. Special built-ins (a small list of built-ins that are considered special)
-# 3. Functions
-# 4. Regular built-ins
-# 5. And then it will look for files in a select list of directories called PATH
-
 # Utility:
 Also 'Command' or 'Program'
 First item in the instruction
@@ -52,6 +35,20 @@ $ diff -y west east
 # 3 Parameters:
 # -y is an option
 # west and east are arugments because diff acts on them
+
+# Types of Commands
+# Files: Programs, Tools, Commands, etc. run files. .exe
+# Builtin: Commands that run in RAM for quick access
+# Alias: Diff name for command, to abbrev something
+# Function: Just like in python
+# Keyword: Unique words for commands
+
+# Order of running commands
+# 1. Aliases
+# 2. Special built-ins (a small list of built-ins that are considered special)
+# 3. Functions
+# 4. Regular built-ins
+# 5. And then it will look for files in a select list of directories called PATH
 
 # Commands with multiple options
 $ command -option1 -option2 argument
@@ -78,6 +75,12 @@ $ help command
 # Run Python
 $ Python3 -c "code" # Python3 is a file type
 
+# Print command (like Python)
+$ echo 'string'
+
+# Defaults to adding new line, to no add new lines
+$ echo -n 'string'
+
 # Set Autocomplete ON
 $ compgen # Press TAB key to autocomplete
 
@@ -98,11 +101,6 @@ $ type -t command # -t is not POSIX compliant and not portable
 
 # Get command PATH
 $ type -P command # Not portable
-
-# Determine file kind
-$ file filename
-#OR
-$ file * # for all directory
 
 # Find total functions available to use rn
 $ declare -F # Known as BASHISM i.e. only available for Bash, non-POSIX
@@ -128,54 +126,7 @@ $ exit
 ________________________________________________________________________________
 
 
-LESS: # A terminal pager, i.e used to view contents of a text file
-# Acess the command manual
-$ man command # Display in a program called LESS, on the man page
-
-# Structure:
-# NAME: The command's name and a brief description of what it does.
-# SYNOPSIS: The allowed syntax.
-# DESCRIPTION: A description of the command. It frequently includes information about its options.
-# OPTIONS: When not included in the section above, the options are documented in this section.
-
-# Simple manual
-$ whatis command
-
-# Immedaite manual help
-$ help command #OR
-$ command --help
-
-# Less command
-$ less file # to open the file in a less pager
-
-# Breakdown of MAN and HELP page
-# Bold Text: Type exactly as seen
-# Italic: replace with appr arg
-# []: Optional arg
-# arg|arg: Can't be used together
-# Arg... : Can Repeat args
-# [arg]... : Can repeat entire optional arg
-
-# LESS Features:
-# Input                             Action
-# Up/down arrows         Scroll up/down one line
-# Left/right arrows      Move page to the left/right
-# b                      Scroll up (or backwards) one page
-# Space                  Scroll down one page
-# g                      Move to the beginning of the file
-# G                      Move to the end of the file
-# /pattern               Search forward for the occurrence of the regex pattern
-# ?pattern               Search backwards for the occurrence of the regex pattern
-# n                      Find next occurrence of the previous search
-# N                      Find previous occurrence of the previous search
-# :p                     Move to previous file
-# :n                     Move to next file
-# h                      Display less's help screen (with less)
-# q                      Quit the active instance of less
-________________________________________________________________________________
-
-
-THE FILSYSTEM EXPOLRATION:
+THE FILSYSTEM:
 # Show current directory
 $ pwd # print working directory
 
@@ -207,10 +158,7 @@ $ ls -lAp # Alt, if 1. starts with (d), you don't need -p option
 
 # List human readable long content
 $ ls -lh # Changes some values to easier to understand values, ex size in KB\
-________________________________________________________________________________
 
-
-THE FILESYSTEM:
 # Change directory
 $ cd [PATH] # in Ubuntu, use /mnt/c/ before any path
 
@@ -280,7 +228,7 @@ $ mv [OLD NAME] [NEW NAME]
 ________________________________________________________________________________
 
 
-GLOB PATTERNS:
+GLOB PATTERNS & WILDCARDS:
 # Like regular expressions
 # Used to match file names for commands such as cp
 # Built from special characters called "Wildcards" and regular characters
@@ -356,7 +304,8 @@ $ grep -v 'pattern' file
 # Grep select but ignore case
 $ grep -i 'pattern' file
 
-# 
+# Exclude filenames from output
+$ grep -h 'pattern' file
 ________________________________________________________________________________
 
 
@@ -467,7 +416,65 @@ $ sudo chown [new_owner][:new_group] files...
 $ chgrp
 ________________________________________________________________________________
 
-TEXT PROCESSING: # Like data exploration and cleaning in python
+
+LESS: # A terminal pager, i.e used to view contents of a text file
+# Acess the command manual
+$ man command # Display in a program called LESS, on the man page
+
+# Structure:
+# NAME: The command's name and a brief description of what it does.
+# SYNOPSIS: The allowed syntax.
+# DESCRIPTION: A description of the command. It frequently includes information about its options.
+# OPTIONS: When not included in the section above, the options are documented in this section.
+
+# Simple manual
+$ whatis command
+
+# Immedaite manual help
+$ help command #OR
+$ command --help
+
+# Less command
+$ less file # to open the file in a less pager
+
+# Breakdown of MAN and HELP page
+# Bold Text: Type exactly as seen
+# Italic: replace with appr arg
+# []: Optional arg
+# arg|arg: Can't be used together
+# Arg... : Can Repeat args
+# [arg]... : Can repeat entire optional arg
+
+# LESS Features:
+# Input                             Action
+# Up/down arrows         Scroll up/down one line
+# Left/right arrows      Move page to the left/right
+# b                      Scroll up (or backwards) one page
+# Space                  Scroll down one page
+# g                      Move to the beginning of the file
+# G                      Move to the end of the file
+# /pattern               Search forward for the occurrence of the regex pattern
+# ?pattern               Search backwards for the occurrence of the regex pattern
+# n                      Find next occurrence of the previous search
+# N                      Find previous occurrence of the previous search
+# :p                     Move to previous file
+# :n                     Move to next file
+# h                      Display less's help screen (with less)
+# q                      Quit the active instance of less
+________________________________________________________________________________
+
+
+FILE TEXT PROCESSING: # Like data exploration and cleaning in python
+# Determine file kind
+$ file filename
+#OR
+$ file * # for all directory
+
+# Create an empty file
+$ >empty_file
+# OR
+$ touch file1, file2 # only if file doesn't exist already
+
 # Display the top of a file
 $ head file
 
@@ -481,10 +488,13 @@ $ head -n k file # k is the number of lines we want ex 5
 $ head -n -k file # -k means will print all lines except last k lines
 
 # Exclude for tail
-$ tail -n +k file # +k means will print all lines except first k lines
+$ tail -n +k file # +k means will print all lines starting from k line
 
 # Count the number of lines, words and bits of a file
 $ wc file # In the order above
+
+# Count the number of lines
+$ wc -l file # -l option for lines only
 
 # Print, view and count file columns
 $ column -s"," -t file # Use (-s',') to specify , delimit instead of space
@@ -529,8 +539,34 @@ $ cut -d',' -f<col1,col2> file.csv # -d delimiter, -f specific cols
 # Display range of columns
 $ cut -d',' -f<col1-col2> file.csv # Can also mix both ex: 2,3,7-9
 
-#
+________________________________________________________________________________
 
 
+REDIRECTION & PIPELINES: # Save the output to another file
+# Process: Every instance of running a command
+# Every process interacts with its *nix envi using communication channels
+# These are known as streams, three special kinds are called Standard Streams
+1. Stdin: (Standard input) used to recieve input
+2. Stout: (standard output) where the command output goes
+3. Sterr: (Standard error) Where error messages go
 
-#
+# Redirection operator
+$ command >filename # > tells to save output to file
+
+# Defaults to overwriting file content, to append
+$ command >>filename
+
+# Redirect to discard output data
+$ command >/dev/null # Output is ignored by OS and disappears
+
+# Redirect to sterr
+$ command 2>file # Use 2>> to append
+
+# Redirecting multiple commands
+$ command1 command2 >file 2>file # Or any other pattern
+
+# Piping
+$ command1 | command2 # | is a pipe, direct output of command1 as input of cmd2
+
+# Pinping multiple commands
+$ command1 | command2 | command3 # they execute in order
