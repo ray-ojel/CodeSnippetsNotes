@@ -337,7 +337,7 @@ $ sudo -u user <command> # sudo (substitute user do)
 # Run commands as root or superuser
 $ sudo <command> # is enough
 
-# Everything is a file
+# IN UNIX: EVERYTHING IS A FILE!
 # Three scopes:
 # 1. There are permissions for the owner
 # 2. There are for the group
@@ -542,28 +542,65 @@ $ cut -d',' -f<col1-col2> file.csv # Can also mix both ex: 2,3,7-9
 ________________________________________________________________________________
 
 
-REDIRECTION & PIPELINES: # Save the output to another file
+REDIRECTION & PIPELINES:
 # Process: Every instance of running a command
 # Every process interacts with its *nix envi using communication channels
 # These are known as streams, three special kinds are called Standard Streams
-1. Stdin: (Standard input) used to recieve input
-2. Stout: (standard output) where the command output goes
-3. Sterr: (Standard error) Where error messages go
+# Kinda like items on grovery store belt, checked out one at a time
+1. Stdin: (Standard input) used to RECEIVE input
+2. Stout: (standard output) where the command OUTPUT goes
+3. Sterr: (Standard error) Where ERROR messages go
+
+# Parent process: Process that spawns another process.
+Ex: Bash=parent, cmd=child. # 'Bash is a parent process of the process spawned by cmd'
+
+# Std. Streams are refered to by File Descriptors, non-negative int, which *nix uses
+1. Stdin = 0
+2. Stout = 1
+3. Stderr = 2
+
+# List files of the directory /proc/$$/fd
+$ ls -l /proc/$$/fd
+# /proc/$$ : Directory of the current path -> Bash in this case
+# fd is the File Descriptors directory, represented as Symbolic Links (l)
+# File /dev/tty1 represents our shell
+
+# Stdin
+$ sort -u >sorted_stdin # This command is an example that needs a stdin after running
+a # Input text1
+i # Input text2
+u # Input text3
+CTRL-D # End of transmission
+
+# Transliteration
+$ tr 'Old_char' 'new_chars' # Used to replace characters with (possibly other) characters
+
+# Stdin redirection
+$ command 0<filename # < tells to use file as input
 
 # Redirection operator
-$ command >filename # > tells to save output to file
+$ command >filename # > tells to save result to file
+
+# Redirect stout to file
+$ command 1>filename # 1 tells to save stdout
 
 # Defaults to overwriting file content, to append
-$ command >>filename
+$ command 1>>filename
 
 # Redirect to discard output data
-$ command >/dev/null # Output is ignored by OS and disappears
+$ command 1>/dev/null # Output is ignored by OS and disappears
 
 # Redirect to sterr
 $ command 2>file # Use 2>> to append
 
 # Redirecting multiple commands
-$ command1 command2 >file 2>file # Or any other pattern
+$ command1 command2 1>file1 2>file2 # Or any other pattern, each one mathces its order
+
+# Using file descriptors duplication to redirect both stdout and stderr to a file
+$ command >filename 2>&1
+# Redirect 1 to a file (>filename)
+# Create a copy of 1 in 2 (2>&1)
+# Both Stdout and Stderr will be redirected to a file
 
 # Piping
 $ command1 | command2 # | is a pipe, direct output of command1 as input of cmd2
