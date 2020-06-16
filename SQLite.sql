@@ -1,11 +1,13 @@
 SQL (Structured Query Language):
--- Communicates with a DBMS to query datasets.
--- C.R.U.D Operations
+-- Communicates with a DBMS (Database Management System) to query datasets.
 
+-- C.R.U.D Operations
 -- Create
 -- Read
 -- Update
 -- Delete
+
+-- Schema diagram: How tables in databse are linked with which columns
 
 -- Run SQL in Jupyter Notebook
 %%capture
@@ -134,6 +136,10 @@ SELECT table.column AS 'new_col'
 SELECT table.column 'new_col'
   FROM table;
 
+-- Select and rename table
+SELECT *
+  FROM table AS t; -- Also optional to not include ^^
+
 -- Reference renamed cols in queries
 SELECT table.column1 'c1', table.column2 'c2'
   FROM table
@@ -234,4 +240,13 @@ SELECT table.column
                   ORDER BY AGGFUNC(col)
                 );
 
+________________________________________________________________________________
+
+
+JOINS:
+-- Inner Join
+SElECT table1.columns FROM table1 -- include only rows from each table that match ON
+INNER JOIN table2 ON table1.column = table2.column;
+
+--
 ________________________________________________________________________________
