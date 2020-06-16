@@ -72,6 +72,9 @@ $ command --help
 # OR
 $ help command
 
+# Open a file or URL in the default application
+$ xdg-open filename
+
 # Run Python
 $ Python3 -c "code" # Python3 is a file type
 
