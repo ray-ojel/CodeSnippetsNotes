@@ -129,6 +129,12 @@ SELECT *
  WHERE condition
  ORDER BY col DESC;
 
+-- Order rows by a column using numerical id
+SELECT table.column1, table.column2 -- numbered 1 2 in order, like aliases
+  FROM table
+ WHERE condition -- Can be used with GROUP BY also
+ ORDER BY 2 DESC; -- 2 means the second column from the SELECT clause
+
 -- Select and Rename column, KNOWN as an Alias
 SELECT table.column AS 'new_col'
   FROM table;
@@ -164,6 +170,16 @@ SELECT table.column,
 SELECT table.column
   FROM table
  WHERE condition IN table.column;
+
+-- Find NULL values in rows
+SELECT table.column
+  FROM table
+ WHERE table.colum IS NULL;
+
+-- Find Not NULL values in rows
+SELECT table.column
+  FROM table
+ WHERE table.column IS NOT NULL;
 ________________________________________________________________________________
 
 
@@ -245,8 +261,20 @@ ________________________________________________________________________________
 
 JOINS:
 -- Inner Join
-SElECT table1.columns FROM table1 -- include only rows from each table that match ON
-INNER JOIN table2 ON table1.column = table2.column;
+SElECT * FROM table1 -- include only rows from each table that match ON
+INNER JOIN table2 ON table1.column = table2.column; -- Think intersection of Venn Diagram
 
---
+-- Left Join
+SELECT * FROM table1 -- Include all rows from inner plus any rows from table1
+LEFT JOIN table2 ON table1.column = table2.column; -- Think Intersection + table1 of Venn
+
+-- Right Join
+SELECT * FROM table2 -- Include all rows from inne plus anty rows from table2
+RIGHT JOIN table1 ON table1.column = table2.column; -- Think Int. + Right of Venn Diagram
+
+-- FULL OUTER Join
+SELECT * FROM table1
+FULL OUTER JOIN table2 ON table1.column = table2.column -- Like UNION of VennDiagram
+
+
 ________________________________________________________________________________
