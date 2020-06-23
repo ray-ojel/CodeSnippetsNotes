@@ -76,6 +76,21 @@ GROUP BY Clause
 
 -- Filter out GROUP BY Clause
 HAVING Clause
+
+-- Subquery
+WITH Clause
+
+-- Permenant subquery
+CREATE VIEW Clause
+
+-- Concatenate strings
+|| Operator
+
+-- Match names similar to pattern
+LIKE Operator
+
+-- Categorize if/then options for a new column
+CASE Statement
 ________________________________________________________________________________
 
 
@@ -180,6 +195,39 @@ SELECT table.column
 SELECT table.column
   FROM table
  WHERE table.column IS NOT NULL;
+
+-- Concatenate columns: Concatenate operator ||
+SELECT 'string' || table.col
+  FROM table; -- Output 'stringcol
+
+-- Match similar to pattern
+SELECT table.col
+  FROM table
+ WHERE table.col LIKE '[pattern]' -- Case insensitive
+-- %pattern will match at end of string
+-- pattern% will match at start of string
+-- %pattern% will match anywhere within string
+
+-- If/then new column
+SELECT
+    table.col,
+    CASE
+        WHEN condition1 THEN val1 -- Can use LIKE oeprator as condition
+        WHEN condition2 THEN val2 -- Eq. to If/Elif/Else
+        ELSE val3
+        END
+        AS new_col
+  FROM table;
+
+________________________________________________________________________________
+
+
+DELETE:
+-- Delete
+DROP table;
+
+-- Delete a VIEW
+DROP VIEW database.table;
 ________________________________________________________________________________
 
 
@@ -231,7 +279,6 @@ SELECT AGGFUNC(table.column) AS <new_name>
   FROM table
 GROUP BY table.column1
 HAVING condition; -- Eq. to WHERE but for GROUP BY
-
 ________________________________________________________________________________
 
 
@@ -256,10 +303,31 @@ SELECT table.column
                   ORDER BY AGGFUNC(col)
                 );
 
+-- Create a subquery at the beginning of the SELECT
+WITH alias AS (SELECT table.column
+                     FROM table
+                   GROUP BY condition
+                 ORDER BY AGGFUNC(col)
+               )
+SELECT table.column
+  FROM table
+ WHERE condition IN alias;
+
+-- Create multiple subqueries at the beginning
+WITH
+    [alias_name] AS ([subquery]),
+    [alias_name_2] AS ([subquery_2]),
+    [alias_name_3] AS ([subquery_3])
+
+SELECT [main_query] -- Can use the result of the first subquery in subsequent subqueries
+
+-- Defaults to temporary, to create a permanent subquery
+CREATE VIEW database.view_name AS
+  SELECT * FROM database.table;
 ________________________________________________________________________________
 
 
-JOINS:
+JOINS AND UNIONS:
 -- Inner Join
 SElECT * FROM table1 -- include only rows from each table that match ON
 INNER JOIN table2 ON table1.column = table2.column; -- Think intersection of Venn Diagram
@@ -274,7 +342,50 @@ RIGHT JOIN table1 ON table1.column = table2.column; -- Think Int. + Right of Ven
 
 -- FULL OUTER Join
 SELECT * FROM table1
-FULL OUTER JOIN table2 ON table1.column = table2.column -- Like UNION of VennDiagram
+FULL OUTER JOIN table2 ON table1.column = table2.column; -- Like UNION of VennDiagram
 
+-- Joining three tables
+SELECT table1.col FROM table1
+JOIN table2 ON table1.col = table2.col
+JOIN table3 ON table2.col = table3.col; -- Executes in order of listed joins
 
+-- Recursive joins: joining a table to itself
+SELECT t1.col, t2.col FROM table1 t1 -- Use inner or left join like normal
+INNER JOIN table2 t2 ON t1.col = t2.col; -- Use different aliases for tables
+
+-- Union: Everything inside Venn Diagram
+SELECT table1.col -- Must contain the same number of columns
+  FROM table1 -- Eq. to OR in pyhton
+UNION
+SELECT table2.col
+  FROM table2;
+
+-- Intersect: The middle intersection of Venn Diagram
+SELECT table1.col -- Eq. to AND in python
+  FROM table1
+INTERSECT
+SELECT table2.col
+  FROM table2;
+
+-- Except: The first staement but not the second
+SELECT table1.col -- Eq. to AND NOT in python
+  FROM table1
+EXCEPT
+SELECT table2.col
+  FROM table2;
 ________________________________________________________________________________
+
+
+WITH
+    country AS
+            (
+            SELECT
+                c.first_name || " " || c.last_name customer_name,
+                i.billing_country country,
+                SUM(i.total) total_purchased
+            FROM customer c
+            INNER JOIN invoice i ON i.customer_id = c.customer_id
+            GROUP BY 1
+            )
+SELECT country, customer_name, ROUND(MAX(total_purchased), 2) total_purchased FROM country
+GROUP BY country; 
