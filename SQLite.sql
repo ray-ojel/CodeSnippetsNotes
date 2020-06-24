@@ -13,6 +13,13 @@ SQL (Structured Query Language):
 %%capture
 %load_ext sql
 %sql sqlite:///file.db
+
+-- Check schema overview
+SELECT
+    name,
+    type
+FROM sqlite_master
+WHERE type IN ("table","view");
 ________________________________________________________________________________
 
 
@@ -374,18 +381,3 @@ EXCEPT
 SELECT table2.col
   FROM table2;
 ________________________________________________________________________________
-
-
-WITH
-    country AS
-            (
-            SELECT
-                c.first_name || " " || c.last_name customer_name,
-                i.billing_country country,
-                SUM(i.total) total_purchased
-            FROM customer c
-            INNER JOIN invoice i ON i.customer_id = c.customer_id
-            GROUP BY 1
-            )
-SELECT country, customer_name, ROUND(MAX(total_purchased), 2) total_purchased FROM country
-GROUP BY country; 
