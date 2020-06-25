@@ -13,13 +13,6 @@ SQL (Structured Query Language):
 %%capture
 %load_ext sql
 %sql sqlite:///file.db
-
--- Check schema overview
-SELECT
-    name,
-    type
-FROM sqlite_master
-WHERE type IN ("table","view");
 ________________________________________________________________________________
 
 
@@ -101,9 +94,78 @@ CASE Statement
 ________________________________________________________________________________
 
 
+CREATE:
+-- Create a database table
+CREATE TABLE table (
+  col1 co1_type,
+  col2 col2_type,
+  col3 col3_type,
+  ...
+);
+
+-- Data Types
+-- TEXT, CHARACTER, VARCAHR, NCHAR, NVARCHAR, DATETIME: For strings
+-- INTEGER, INT, SMALLINT, BIGINT, INT8: Numeric
+-- REAL, DOUBLE, FLOAT: Weights, Averages
+-- NUMERIC, DECIMAL, BOOLEAN: DeCIMALS
+-- BLOB: Binary data
+
+-- Primary Key: Unique id for each row, can't have to with the same
+CREATE TABLE table (
+  col1 co1_type PRIMARY KEY,
+  col2 col2_type,
+  col3 col3_type
+);
+
+-- Foreign Key: A column in one table that is a primary key in another table.
+CREATE TABLE table (
+  col1 co1_type PRIMARY KEY,
+  col2 col2_type,
+  col3 col3_type,
+  FOREIGN KEY (col2) REFERENCES table(col)
+);
+
+-- Composite or Compound Key
+CREATE TABLE table (
+  col1 co1_type,
+  col2 col2_type,
+  col3 col3_type,
+  PRIMARY KEY (col1, col2) -- Same thing with FOREIGN KEYS
+);
+
+-- Add rows
+INSERT INTO table (
+  col1,
+  col2,
+  col3,
+) VALUES (
+  val1,
+  val2,
+  val3
+);
+
+-- Add val to all columns of the row
+INSERT INTO table VALUES (val1, val2, val3);
+
+-- Add val to all columns seprated by rows
+INSERT INTO table
+VALUES
+  (val1, val2, val3),
+  (val4, val5, val6),
+  ...;
+________________________________________________________________________________
+
+
 READ:
 -- Structured code to CRUD databases
 -- Ask DBMS software to run the code and display the results
+
+-- Check schema overview
+SELECT
+    name,
+    type
+FROM sqlite_master
+WHERE type IN ("table","view");
 
 -- Select ALL columns from table
 SELECT *
@@ -225,13 +287,42 @@ SELECT
         END
         AS new_col
   FROM table;
+________________________________________________________________________________
 
+
+UPDATE:
+-- Change values for existing rows
+UPDATE table
+SET col = exp;
+
+-- Upadte a single value of a row
+UPDATE table
+SET col = exp
+WHERE row_id = INT;
+
+-- Update using subqueries
+UPDATE table
+SET col = [subquery]
+
+-- Update a column with a column or aggfunc
+UPDATE table
+SET col2 = col1 * INT;
+
+-- Update more than one column at once
+UPDATE table
+SET
+  col1 = exp,
+  col2 = exp;
+
+-- Add a column to an existing table
+ALTER TABLE table
+ADD COLUMN col col_type;
 ________________________________________________________________________________
 
 
 DELETE:
 -- Delete
-DROP table;
+DROP TABLE table;
 
 -- Delete a VIEW
 DROP VIEW database.table;
@@ -381,3 +472,66 @@ EXCEPT
 SELECT table2.col
   FROM table2;
 ________________________________________________________________________________
+
+
+SQLite Shell:
+-- Que up sqlite shell
+$ sqlite3 database.db
+sqlite>
+
+-- Create new database
+$sqlite3 new_database.db
+
+-- Show header column
+sqlite> .headers on -- Known as Dot Commands like Options
+
+-- Show column mode
+sqlite> .mode column
+
+-- Documentation
+sqlite> .help
+
+-- display a list of all tables and views in the current database
+sqlite> .tables
+
+-- Run Ubuntu commands in sqlite
+sqlite> .shell [command]
+
+-- Check created table schema
+sqlite> .schema table
+
+-- Exit sqlite shell
+sqlite> .quit
+
+________________________________________________________________________________
+
+
+SQLite in Python:
+-- import
+import sqlite3
+
+-- Connect database
+db = sqlite3.connect('database.db') -- function, creates a connection instance that blocks anyone but you
+
+-- Return a Cursor instance
+cursor = db.cursor() -- Connection instance method, then write SQL code in STRINGS
+
+-- Run an SQLite query
+query = 'select * from table'
+cursor.execute(query) -- Cursor method
+results = cursor.fetchall() -- store result as a vairable
+print(results[0:3])
+
+-- Run query shortcut
+query = 'select * from table'
+result = db.execute(query).fetchall() -- method chaining
+
+-- Return a single result
+result = cursor.fetchone() -- Cursor method
+result2 = cursor.fetchone() -- has an interal counter, auto increment by 1
+
+-- Return n results
+results = cursor.fetchmany(n) -- cursor method, n=int
+
+-- Close database connection
+db.close() -- Connection method, v imp to close bc connection is secure as above ^^
