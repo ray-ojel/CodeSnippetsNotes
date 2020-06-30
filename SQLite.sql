@@ -2,7 +2,7 @@ SQLite Shell:
 -- Run SQLite in Jupyter Notebook
 %%capture
 %load_ext sql
-%sql sqlite:///file.db -- Use %%sql before every query 
+%sql sqlite:///file.db -- Use %%sql before every query
 
 -- Que up sqlite shell
 $ sqlite3 database.db
@@ -11,6 +11,7 @@ sqlite>
 -- Create new database
 $sqlite3 new_database.db
 
+-- SQLite special commands start with a (.) 
 -- Show header column
 sqlite> .headers on -- Known as Dot Commands like Options
 
