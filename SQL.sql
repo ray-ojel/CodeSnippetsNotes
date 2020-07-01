@@ -168,6 +168,9 @@ SELECT
 FROM sqlite_master
 WHERE type IN ("table","view");
 
+-- Return Schema of a table
+PRAGMA table_info(table);
+
 -- Select ALL columns from table
 SELECT *
   FROM table; -- Always end command with (;)
@@ -475,3 +478,13 @@ SELECT table1.col -- Eq. to AND NOT in python
 EXCEPT
 SELECT table2.col
   FROM table2;
+________________________________________________________________________________
+
+
+QUERY PLANS:
+-- Get a high level query plan of the SELECT statement
+EXPLAIN QUERY PLAN SELECT * FROM table;
+-- OUTPUT
+[(0, 0, 0, 'SCAN TABLE table')] -- Returned as a tuple, means every row in table had to accessed to evalute query
+
+-- 
