@@ -1,4 +1,4 @@
-SQLite Shell:
+SQLITE SHELL:
 -- Run SQLite in Jupyter Notebook
 %%capture
 %load_ext sql
@@ -11,7 +11,7 @@ sqlite>
 -- Create new database
 $sqlite3 new_database.db
 
--- SQLite special commands start with a (.) 
+-- SQLite special commands start with a (.)
 -- Show header column
 sqlite> .headers on -- Known as Dot Commands like Options
 
@@ -36,7 +36,7 @@ sqlite> .quit
 ________________________________________________________________________________
 
 
-SQLite in Python:
+SQLITE IN PYTHON:
 -- import
 import sqlite3
 

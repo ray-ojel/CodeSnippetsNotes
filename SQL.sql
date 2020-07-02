@@ -486,5 +486,3 @@ QUERY PLANS:
 EXPLAIN QUERY PLAN SELECT * FROM table;
 -- OUTPUT
 [(0, 0, 0, 'SCAN TABLE table')] -- Returned as a tuple, means every row in table had to accessed to evalute query
-
--- 

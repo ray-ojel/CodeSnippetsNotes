@@ -6,7 +6,7 @@
 _______________________________________________________________________________
 
 
-PostgreSQL in Python:
+POSTGRESQL IN PYTHON:
 import psycopg2 -- defaults to connecting to 5432 server on local machine
 db = psycopg2.connect('dbname=postgres user=postgres') -- specify unique database and user, can have multiple ones
 cursor = db.cursor()
@@ -38,7 +38,7 @@ result = cursor.fetchone() -- Use print() to print results
 ________________________________________________________________________________
 
 
-PostgreSQL Shell:
+POSTGRESQL SHELL:
 -- PSQL Command Line Tool
 -- Automatically connects to port 5432, dbname and user default to 'postgresql'
 -- Start PostgreSQL
