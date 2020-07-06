@@ -1,12 +1,14 @@
 APIs:
-# Application Program Interface (API)
-# Tools and programs (like web browser) to dynamically retreive data and information dynamically
-# EX: Orgs host their APIs on Web Servers, brower API asks server for a Web page, then returns to browser
-# My program will be like the web browser asking for a web page
-# Receive data in JSON format
-# We make an API request (call to a server using an API) to the Web server we want to get data from
-# Endpoints: Serve route (URL) for retrieving specific data from an API
+# Application Program Interface
+# Tools and programs (like web browser) to dynamically retreive data and information dynamically.
+# EX: Orgs host their APIs on Web Servers, brower API asks server for a Web page, then returns to browser.
+# My program will be like the web browser asking for a web page.
+# JSON is the primary format for sending and receiving data through APIs.
+# We make an API request (call to a server using an API) to the Web server we want to get data from.
 
+# Endpoints: Serve route (URL) for retrieving specific data from an API
+# sends metadata containing information on how it generated the data and how to decode it.
+# This information appears in the response headers.
 ________________________________________________________________________________
 
 
@@ -98,8 +100,8 @@ REQUESTS: # Python library that allows us to make API requests to a web server
 # Import
 import requests
 
-# Make a Get Request for the link
-page = requests.get('URL')' # Method, used to retrieve data
+# GET Request
+page = requests.get('URL') # Method, used to retrieve data
 
 # Display the html content of the page
 content = page.content # Attribute
@@ -118,9 +120,49 @@ status_code = page.status_code
 
 # Make a Get request with query parameters
 # Store parameters in a dictionary
+parameters = {"par1": par1, "par2": par2}
+response = requests.get("URL", params=parameters)
 
+# Or Directly in URL
+response = requests.get("URL?par1=par1&par2=par2")
 
-page = requests.get
+# Get the content of the response (the JSON data) as a PYTHON object
+object = response.json()
+
+# Access response headers
+resp_head = response.headers # Result is a python Object (dictionary)
+
+# Some APIs require authenicaion such as passwords and users
+# They can be used to perform a rate limiting step to not overload the server with requests.
+# Access Tokens can be used to authenticate instead of User and Pass
+# Access tokens are strings that the API can read and associate with the account
+# We send access tokens using an Authorization Header
+# Authorization Header
+headers = {'Authorization': 'Token 1f36137fbbe1602f779300dad26e4c1b7fbab631'}
+page = requests.get('URL', headers = headers)
+
+# Pagination: Return a certain number of records per page
+# You can specify the page number and records per page as a dictionary, to access all, write a loop
+params = {'per_page':n, 'page':i} # n and i are INT
+page = requests.get('URL', params = params)
+
+# POST Request
+data = {'name':'test'}
+response = requests.post('url', json = data) # Success status code 201
+# Send information and create objects on the API server
+
+# PATCH Request
+data = {'name':'test'}
+response = requests.patch('url', json = data) # Success status code 200
+# Change attributes of an object, but don't want to resend the entire object to the server
+
+# PUT Request
+data = {'name':'test'}
+response = requests.put('url', json = data) # Success status code 200
+# Send complete object we're revising as a replacement for the server's existing version
+
+# DELETE Request
+response = requests.delete('url') # Success return staus 204
 ________________________________________________________________________________
 
 

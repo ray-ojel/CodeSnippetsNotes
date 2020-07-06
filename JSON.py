@@ -17,13 +17,10 @@ import json
 file = open("file.json")
 json.load(file) # Method, used to load a file object and convert to python object
 
-# convert JSON data contained in a STRING to the equivalent set of Python object
+# Take in JSON string, and convert it to a Python object
 json.loads(str) # Method, str == JSON string, 'load string' converts according to conversion table above
 
-# Create a string from a JSON object
+# Take in a Python Object, and convert it to a string
 json.dumps(obj, sort_keys = True, indent = 4) # method, obj == JSON obj, returns string
-
-# 
-
 
 ________________________________________________________________________________
