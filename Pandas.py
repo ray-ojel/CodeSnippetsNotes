@@ -276,8 +276,14 @@ ________________________________________________________________________________
 
 
 CONVERT DATAFRAME TO OBJECT:
+# Import
+import datetime as dt
+
 # Convet to datetime object
 pd.to_datetime(DataFrame) # Method
+
+# Directly convert csv to datetime
+df = pd.read_csv('file.csv', parse_dates = ['col'])
 
 # Extract datetime data from datetime object
 DataFrame.dt.month
