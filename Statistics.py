@@ -47,4 +47,36 @@ VARIABLES:
 # Discrete Variable
 # No possible value in between any two adjacent values of the variable, ex No. ppl
 
+# Frequency Distribution Table (FDT)
+# Counting how many times each unique value of a variable occurs
+Series.value_counts() # Generates Freq Dist Table
+
+# FDT for Nominal Scale
+Series.value_counts().sort_index() # .sort_index(ascending=False) for desc
+
+# FDT for Ordinal Scale
+# Convert to nominal scale and use same^^
+
+# Proportions
+# Frequency of quantity (relative) over to the total number
+# Usually expressed as decimal
+Series.value_counts() / len(Series)
+# OR
+Series.value_counts(normalize = True)
+
+# Percentages
+# Proportion multiplied by 100
+# Percentages and Proportion are Relative Frequencies i.e depend on total
+
+# Percentile Rank
+# Percentage of values that are equal or less than value X in a FDT
+# That X value is called the yth percentile
+
+
+________________________________________________________________________________
+SCIPY:
+# Import
+from scipy.stats import *
+
+# Find percentile 
 #

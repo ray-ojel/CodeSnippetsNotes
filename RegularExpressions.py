@@ -164,7 +164,7 @@ FUNCTIONS:
 # Search for a pattern match
 re.search(pattern, string, flags=optional) # method, returns True for match, None for no match == False
 
-# Replace strins
+# Replace strings
 re.sub(pattern, repl, string, flags=optional) # Method,
 
 # Return all non-overlapping matches of pattern in string, as a list of strings

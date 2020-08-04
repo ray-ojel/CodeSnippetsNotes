@@ -50,6 +50,10 @@ new_list = [i * 2 for i in old_list]
 
 # Include an if statement in a list comprehension
 new_list = [i for i in old_list if i > 5] # list it at the end, add i back if i is bigger than 5
+
+# Return Index and Value in list
+for counter, value in enumerate(list):
+    print counter, value # Output: 0 val1, 1 val2, 2 val3
 ________________________________________________________________________________
 
 LAMBDA FUNCTIONS: # Temporary functions
